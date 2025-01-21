@@ -1,20 +1,17 @@
-import {simpsons} from "../data/charactersList.ts";
 import {ICharacter} from "../models/character.ts";
+import {ReactNode} from "react";
+import './components.css'
 
-function CharacterComponent() {
-    return <h2>
-        {
-            simpsons.map((simpson:ICharacter) => (
-                <div>
-                    <h2>{simpson.name}</h2>
-                    <h2>{simpson.surname}</h2>
-                    <h2>{simpson.age}</h2>
-                    <h2>{simpson.info}</h2>
-                    <img src={simpson.photo} alt={simpson.name}/>
-                </div>
-            ))
-        }
-    </h2>
+interface CharacterComponentProps {
+    item: ICharacter,
+    children: ReactNode,
+}
+
+function CharacterComponent({item, children}: CharacterComponentProps) {
+    return <div className={'character'}>
+        <h3>{item.name} {item.surname}</h3>
+        <div>{children}</div>
+    </div>
 }
 
 export default CharacterComponent;
