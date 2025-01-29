@@ -1,12 +1,13 @@
 import './App.css'
+import TodoComponents from "./components/TodoComponents.tsx";
 
 function App() {
 
-  return (
-    <>
-      hello world!
-    </>
-  )
+    return (
+        <div>
+            <TodoComponents/>
+        </div>
+    )
 }
 
 export default App
