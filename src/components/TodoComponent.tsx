@@ -6,9 +6,9 @@ type TodoComponentProps = {
 
 const TodoComponent = ({item}:TodoComponentProps) => {
     return (
-        <div>
-            <h3>{item.id} {item.userId} {item.title} {item.completed}</h3>
-        </div>
+        <h3>
+            {item.id} {item.userId} {item.title}
+        </h3>
     );
 };
 
