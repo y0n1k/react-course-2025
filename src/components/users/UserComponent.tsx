@@ -8,7 +8,7 @@ type UserComponentPropType = {
 const UserComponent = ({item}:UserComponentPropType) => {
     return (
         <div>
-            <Link to={`/details`} state={item}>
+            <Link to={`/user-details/`+ item.id} state={item}>
                 {item.id}. {item.firstName} {item.lastName}
             </Link>
         </div>
