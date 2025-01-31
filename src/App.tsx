@@ -1,11 +1,13 @@
 import './App.css'
+import PaginationComponent from "./pagination/PaginationComponent.tsx";
 
-function App() {
+const App = () => {
 
   return (
     <>
+      <PaginationComponent/>
     </>
   )
-}
+};
 
 export default App

@@ -1,7 +1,9 @@
+import UserDetailsComponent from "../components/users/UserDetailsComponent.tsx";
+
 const UserPage = () => {
     return (
         <div>
-            user page
+            <UserDetailsComponent/>
         </div>
     );
 };
