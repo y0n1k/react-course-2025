@@ -1,20 +1,24 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import UserComponent from "./UserComponent.tsx";
-import {IUser} from "../../models/user/IUser.ts";
-import {getUsers} from "../../services/api.service.ts";
 import {useSearchParams} from "react-router-dom";
+import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
+import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
+import {userSliceActions} from "../../redux/slices/user/userSlice.ts";
 
 const UsersComponent = () => {
 
-    const [users, setUsers] = useState<IUser[]>([]);
     const [query] = useSearchParams();
+
+    const {users} = useAppSelector(({userSlice}) => userSlice);
+    const dispatch = useAppDispatch()
+
     useEffect( () => {
         const skip = query.get('skip')
-        getUsers(skip || '0')
-            .then(value => {
-                setUsers(value.users)
-            })
-    }, [query])
+        if (skip) {
+            const response = dispatch(userSliceActions.getUsersRedux(skip));
+            console.log(response)
+        }
+    }, [query, dispatch])
 
     return (
         <div>

@@ -18,8 +18,8 @@ const RecipesComponent = () => {
             const response = dispatch(recipeSliceActions.getRecipesRedux(skip));
             console.log(response)
         }
-    }, [query])
-
+    }, [query, dispatch])
+    console.log(recipes)
     return (
         <div>
             {
