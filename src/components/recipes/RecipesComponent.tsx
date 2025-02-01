@@ -1,22 +1,23 @@
-import {useEffect, useState} from "react";
-import {getRecipes} from "../../services/api.service.ts";
+import {useEffect} from "react";
 import {useSearchParams} from "react-router-dom";
-import {IRecipe} from "../../models/recipe/IRecipe.ts";
 import RecipeComponent from "./RecipeComponent.tsx";
+import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
+import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
+import {recipeSliceActions} from "../../redux/slices/recipe/recipeSlice.ts";
 
 const RecipesComponent = () => {
 
-    const [recipes, setRecipes] = useState<IRecipe[]>([]);
     const [query] = useSearchParams();
-    useEffect( () => {
+
+    const {recipes} = useAppSelector(({recipeSlice}) => recipeSlice);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
         const skip = query.get('skip')
-
-            getRecipes(skip || '0')
-                .then(value => {
-                    setRecipes(value.recipes)
-                })
-        console.log(recipes)
-
+        if (skip) {
+            const response = dispatch(recipeSliceActions.getRecipesRedux(skip));
+            console.log(response)
+        }
     }, [query])
 
     return (

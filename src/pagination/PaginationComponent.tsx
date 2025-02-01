@@ -9,8 +9,7 @@ const PaginationComponent = () => {
                 if (skip) {
                     const currentPage = +skip;
                     setQuery({skip: (currentPage - 30).toString()})
-                }
-            }}
+            }}}
             >Назад
             </button>
             <button onClick={() => {
