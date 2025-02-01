@@ -10,10 +10,13 @@ const RecipesComponent = () => {
     const [query] = useSearchParams();
     useEffect( () => {
         const skip = query.get('skip')
-        getRecipes(skip || '0')
-            .then(value => {
-                setRecipes(value.recipes)
-            })
+
+            getRecipes(skip || '0')
+                .then(value => {
+                    setRecipes(value.recipes)
+                })
+        console.log(recipes)
+
     }, [query])
 
     return (

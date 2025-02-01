@@ -8,7 +8,7 @@ export interface IUsers {
 	limit: number;
 }
 
-export interface IPosts {
+export interface IRecipes {
 	recipes: IRecipe[];
 	total: number;
 	skip: number;

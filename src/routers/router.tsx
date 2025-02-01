@@ -4,6 +4,7 @@ import UsersPage from "../pages/UsersPage.tsx";
 import UserPage from "../pages/UserPage.tsx";
 import RecipesPage from "../pages/RecipesPage.tsx";
 import RecipePage from "../pages/RecipePage.tsx";
+import RecipesByTagPage from "../pages/RecipesByTagPage.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
             {path: '/user-details/:userId', element: <UserPage/>},
             {path: '/recipe-details/:userId', element: <RecipePage/>},
             {path: '/recipes', element: <RecipesPage/>},
+            {path: '/recipes/tag/:tag', element: <RecipesByTagPage/>},
         ]
     },
 ])

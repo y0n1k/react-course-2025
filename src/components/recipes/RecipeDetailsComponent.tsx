@@ -1,8 +1,9 @@
-import {useLocation, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import {IRecipe} from "../../models/recipe/IRecipe.ts";
 import {useEffect, useState} from "react";
 import {getUserById} from "../../services/api.service.ts";
 import {IUser} from "../../models/user/IUser.ts";
+import RecipeTagsComponent from "./RecipeTagsComponent.tsx";
 
 const RecipeDetailsComponent = () => {
     const {state} = useLocation();
@@ -19,7 +20,7 @@ const RecipeDetailsComponent = () => {
         <div>
             <div>
                 <div>
-                    <b>{item.name}</b> {item.tags}
+                    <b>{item.name}</b> <RecipeTagsComponent tags={item.tags}/>
                 </div>
                 <div>
                     Інгридієнти: {item.ingredients}
@@ -31,8 +32,9 @@ const RecipeDetailsComponent = () => {
             {user && (
                 <div>
                     <h3>Автор рецепту:</h3>
-                    <p>{user.firstName} {user.lastName}, {user.age} років</p>
-                    <p>Роль: {user.role}</p>
+                    <Link to={`/user-details/`+ user.id} state={user}>
+                        {user.id}. {user.firstName} {user.lastName}
+                    </Link>
                 </div>
             )}
         </div>

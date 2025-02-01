@@ -5,7 +5,7 @@ const RecipesPage = () => {
     return (
         <div>
             recipes page
-            <RecipesComponent/>
+            <RecipesComponent />
             <PaginationComponent/>
         </div>
     );

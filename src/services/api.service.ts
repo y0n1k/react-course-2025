@@ -4,7 +4,6 @@ import {IRecipe} from "../models/recipe/IRecipe.ts";
 export const getRecipes = async (page: string): Promise<{ recipes: IRecipe[] }> => {
     return await fetch('https://dummyjson.com/recipes?skip=' + page)
         .then(value => value.json())
-
 }
 
 export const getRecipesByUserId = async (userId: string): Promise<IRecipe[]> => {
@@ -21,3 +20,17 @@ export const getUserById = async (id: string): Promise<IUser> => {
     return await fetch('https://dummyjson.com/users/' + id)
         .then(response => response.json());
 };
+
+export const getRecipesById = async (id: string): Promise<IRecipe> => {
+    return await fetch('https://dummyjson.com/recipes/' + id)
+        .then(value => value.json())
+}
+
+export const getRecipesByName = async (name: string): Promise<{ recipes: IRecipe[] }> => {
+    return await fetch('https://dummyjson.com/recipes/search?q=' + name)
+        .then(value => value.json())
+}
+export const getRecipesByTag = async (tag: string): Promise<{ recipes: IRecipe[] }> => {
+    return await fetch('https://dummyjson.com/recipes/tag/' + tag)
+        .then(value => value.json())
+}
