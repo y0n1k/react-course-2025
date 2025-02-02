@@ -32,7 +32,7 @@ export interface IHair {
 	color: string;
 	type: string;
 }
-export interface RootObjectAddressCoordinates {
+export interface ICoordinates {
 	lat: number;
 	lng: number;
 }
@@ -42,7 +42,7 @@ export interface IAddress {
 	state: string;
 	stateCode: string;
 	postalCode: string;
-	coordinates: RootObjectAddressCoordinates;
+	coordinates: ICoordinates;
 	country: string;
 }
 export interface IBank {
@@ -52,24 +52,24 @@ export interface IBank {
 	currency: string;
 	iban: string;
 }
-export interface RootObjectCompanyAddressCoordinates {
+export interface ICoordinates {
 	lat: number;
 	lng: number;
 }
-export interface RootObjectCompanyAddress {
-	address: string;
+export interface ICompany {
+	address: IAddress;
 	city: string;
 	state: string;
 	stateCode: string;
 	postalCode: string;
-	coordinates: RootObjectCompanyAddressCoordinates;
+	coordinates: ICoordinates;
 	country: string;
 }
 export interface ICompany {
 	department: string;
 	name: string;
 	title: string;
-	address: RootObjectCompanyAddress;
+	address: IAddress;
 }
 export interface ICrypto {
 	coin: string;

@@ -1,22 +1,31 @@
-import {useEffect, useState} from "react";
-import {getRecipesByTag} from "../../services/api.service.ts";
+import {useEffect} from "react";
 import {useParams} from "react-router-dom";
-import {IRecipe} from "../../models/recipe/IRecipe.ts";
 import RecipeComponent from "./RecipeComponent.tsx";
+import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
+import {recipeSliceActions} from "../../redux/slices/recipe/recipeSlice.ts";
+import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
 
 const RecipesByTagComponent= () => {
 
-    const [recipes, setRecipes] = useState<IRecipe[]>([]);
+    // const [recipes, setRecipes] = useState<IRecipe[]>([]);
     const {tag} = useParams<{tag:string}>()
+
+    const {recipesTag} = useAppSelector(({recipeSlice}) => recipeSlice)
+    const dispatch = useAppDispatch()
+
         useEffect( () => {
             console.log('Current Tag:', tag);
         if (tag) {
-            getRecipesByTag(tag)
-                .then(value => {
-                    console.log(value.recipes);
-                    console.log(value)
-                    setRecipes(value.recipes)
-                })
+            const response = dispatch(recipeSliceActions.getRecipesByTagRedux(tag))
+            console.log(response);
+            console.log(recipesTag);
+            console.log(typeof recipesTag);
+            // getRecipesByTag(tag)
+            //     .then(value => {
+            //         console.log(value.recipes);
+            //         console.log(value)
+            //         setRecipes(value.recipes)
+            //     })
         } else {
             console.log('tag does not exist')
         }
@@ -25,7 +34,7 @@ const RecipesByTagComponent= () => {
     return (
         <div>
             {
-                recipes.map(recipe => <RecipeComponent key={recipe.id} item={recipe}/>)
+                recipesTag?.recipes.map(recipe => <RecipeComponent key={recipe.id} item={recipe}/>)
             }
         </div>
     );

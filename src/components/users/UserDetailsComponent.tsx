@@ -29,11 +29,18 @@ const UserDetailsComponent = () => {
         <div>
             <div>
                 <h3>{item.firstName} {item.lastName}</h3>
+                <img src={item.image} alt=""/>
                 <div>
                     Вік: {item.age}
                 </div>
                 <div>
                     Посада: {item.role}
+                </div>
+                <div>
+                    Дата народження: {item.birthDate}
+                </div>
+                <div>
+                    Місце проживання: {item.address.address} {item.address.city} {item.address.country}
                 </div>
             </div>
             <h3>Рецепти користувача {item.firstName} {item.lastName}</h3>

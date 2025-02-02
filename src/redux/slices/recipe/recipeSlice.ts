@@ -7,7 +7,7 @@ type RecipeSliceType = {
     recipeId: IRecipe[] | null,
     recipes: IRecipe [],
     recipeUserId: IRecipe[] | null,
-    recipesTag: IRecipe[] | null
+    recipesTag: {recipes:IRecipe[]} | null
 }
 
 const initialState: RecipeSliceType = {recipeName: null, recipeId: null, recipes: [], recipeUserId: null, recipesTag: null}
@@ -15,7 +15,7 @@ const initialState: RecipeSliceType = {recipeName: null, recipeId: null, recipes
 const getRecipesByNameRedux =
     createAsyncThunk('recipeSlice/getRecipesByNameRedux', async (name: string, thunkAPI) => {
         try {
-            const recipeName = await fetch('https://dummyjson.com/recipes/search?q=' + name)
+            const recipeName = await fetch('https://dummyjson.com/recipes/search?limit=50&q=' + name)
                 .then(value => value.json())
             console.log(thunkAPI.fulfillWithValue(recipeName))
             console.log(thunkAPI.fulfillWithValue(recipeName))
@@ -44,11 +44,19 @@ const getRecipesRedux =
 
 const getRecipesByUserIdRedux =
     createAsyncThunk('recipeSlice/getRecipesByUserIdRedux', async (userId: string, thunkAPI) => {
-        const recipeUserId = await fetch('https://dummyjson.com/recipes')
+        const recipeUserId = await fetch('https://dummyjson.com/recipes?limit=50')
             .then(value => value.json())
             .then(data => data.recipes.filter((recipe:IRecipe) => recipe.userId.toString() === userId))
         console.log(thunkAPI.fulfillWithValue(recipeUserId))
         return thunkAPI.fulfillWithValue(recipeUserId)
+    });
+
+const getRecipesByTagRedux =
+    createAsyncThunk('recipeSlice/getRecipesByTagRedux', async (tag: string, thunkAPI) => {
+        const recipeTag = await fetch('https://dummyjson.com/recipes/tag/' + tag)
+            .then(value => value.json())
+        console.log(thunkAPI.fulfillWithValue(recipeTag))
+        return thunkAPI.fulfillWithValue(recipeTag)
     });
 
 export const recipeSlice = createSlice({
@@ -69,9 +77,12 @@ export const recipeSlice = createSlice({
             .addCase(getRecipesByUserIdRedux.fulfilled, (state, action) => {
                 state.recipeUserId = action.payload;
         })
+            .addCase(getRecipesByTagRedux.fulfilled, (state, action) => {
+                state.recipesTag = action.payload
+            })
     }
 });
 
 export const recipeSliceActions = {
-    ...recipeSlice.actions, getRecipesByNameRedux, getRecipesByIdRedux, getRecipesRedux, getRecipesByUserIdRedux
+    ...recipeSlice.actions, getRecipesByNameRedux, getRecipesByIdRedux, getRecipesRedux, getRecipesByUserIdRedux, getRecipesByTagRedux
 }

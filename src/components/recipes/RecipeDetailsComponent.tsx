@@ -31,6 +31,12 @@ const RecipeDetailsComponent = () => {
                     <b>{item.name}</b> <RecipeTagsComponent tags={item.tags}/>
                 </div>
                 <div>
+                    Складність: {item.difficulty}
+                </div>
+                <div>
+                    Час: {item.prepTimeMinutes} хв. підготовки + {item.cookTimeMinutes} хв. готування
+                </div>
+                <div>
                     Інгридієнти: {item.ingredients}
                 </div>
                 <div>
