@@ -17,11 +17,13 @@ const RecipesComponent = () => {
         if (skip) {
             const response = dispatch(recipeSliceActions.getRecipesRedux(skip));
             console.log(response)
+            console.log(recipes)
         }
     }, [query, dispatch])
-    console.log(recipes)
+
     return (
         <div>
+            <h3>Всі рецепти</h3>
             {
                 recipes.map(recipe => <RecipeComponent key={recipe.id} item={recipe}/>)
             }

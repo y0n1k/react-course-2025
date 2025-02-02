@@ -34,4 +34,5 @@ export const getRecipes = async (page: string): Promise<{ recipes: IRecipe[] }> 
 export const getRecipesByUserId = async (userId: string): Promise<IRecipe[]> => {
     return await fetch('https://dummyjson.com/recipes?userId=' + userId)
         .then(value => value.json())
+        .then(data => data.recipes.filter((recipe:IRecipe) => recipe.userId.toString() === userId))
 }

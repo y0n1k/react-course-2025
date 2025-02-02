@@ -3,12 +3,12 @@ import {IUser} from "../../../models/user/IUser.ts";
 
 
 type UserSliceType = {
-    userName: IUser[] | null,
-    userId: IUser[] | null,
+    userByName: IUser[] | null,
+    userById: {users: IUser[]} | null,
     users: IUser[]
 }
 
-const initialState: UserSliceType = {userName: null, userId: null, users: []}
+const initialState: UserSliceType = {userByName: null, userById: null, users: []}
 
 const getUsersByNameRedux =
     createAsyncThunk('userSlice/getUsersByNameRedux', async (name: string, thunkAPI) => {
@@ -27,8 +27,8 @@ const getUsersByIdRedux =
     createAsyncThunk('userSlice/getUsersByIdRedux', async (id: string, thunkAPI) => {
         const userId = await fetch('https://dummyjson.com/users/' + id)
             .then(value => value.json())
-        console.log(thunkAPI.fulfillWithValue(userId.userId))
-        return thunkAPI.fulfillWithValue(userId.userId)
+        console.log(thunkAPI.fulfillWithValue(userId))
+        return thunkAPI.fulfillWithValue({users:[userId]})
     });
 
 const getUsersRedux =
@@ -46,10 +46,10 @@ export const userSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(getUsersByNameRedux.fulfilled, (state, action) => {
-                state.userName = action.payload
+                state.userByName = action.payload
             })
             .addCase(getUsersByIdRedux.fulfilled, (state, action) => {
-                state.userId = action.payload;
+                state.userById = action.payload;
             })
             .addCase(getUsersRedux.fulfilled, (state,action) => {
                 state.users = action.payload;

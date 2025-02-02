@@ -1,21 +1,29 @@
-import {Link, useLocation, useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {IRecipe} from "../../models/recipe/IRecipe.ts";
-import {useEffect, useState} from "react";
-import {getUserById} from "../../services/api.service.ts";
-import {IUser} from "../../models/user/IUser.ts";
+import {useEffect} from "react";
 import RecipeTagsComponent from "./RecipeTagsComponent.tsx";
+import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
+import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
+import {userSliceActions} from "../../redux/slices/user/userSlice.ts";
+import UserComponent from "../users/UserComponent.tsx";
 
 const RecipeDetailsComponent = () => {
     const {state} = useLocation();
     const item = state as IRecipe;
     const {userId} = useParams<{ userId: string }>();
-    const [user, setUser] = useState<IUser>();
     console.log(userId)
-    useEffect(():void => {
+
+    const {userById} = useAppSelector(({userSlice}) => userSlice);
+    const dispatch = useAppDispatch();
+
+    useEffect((): void => {
         if (userId) {
-            getUserById(userId).then(setUser)
+            const response = dispatch(userSliceActions.getUsersByIdRedux(userId));
+            console.log(response)
+            console.log(userById)
+            console.log(userById?.users)
         }
-    }, [userId]);
+    }, [userId, dispatch]);
     return (
         <div>
             <div>
@@ -29,14 +37,14 @@ const RecipeDetailsComponent = () => {
                     Інструкція: {item.instructions}
                 </div>
             </div>
-            {user && (
+            {
                 <div>
                     <h3>Автор рецепту:</h3>
-                    <Link to={`/user-details/`+ user.id} state={user}>
-                        {user.id}. {user.firstName} {user.lastName}
-                    </Link>
+                    {
+                            userById?.users.map(user => <UserComponent key={user.id} item={user}/>)
+                    }
                 </div>
-            )}
+            }
         </div>
 
     );

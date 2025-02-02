@@ -3,6 +3,8 @@ import {joiResolver} from "@hookform/resolvers/joi";
 import {recipeNameValidator} from "../../validators/recipe.name.validator.ts";
 import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx"
 import {recipeSliceActions} from "../../redux/slices/recipe/recipeSlice.ts";
+import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
+import {useNavigate} from "react-router-dom";
 
 type IFormProps = {
     name: string
@@ -10,7 +12,10 @@ type IFormProps = {
 
 const RecipeSearchComponent = () => {
 
+    const {recipeName} = useAppSelector(({recipeSlice}) => recipeSlice);
     const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
 
     const {
         handleSubmit,
@@ -25,8 +30,9 @@ const RecipeSearchComponent = () => {
         console.log(formDataProps);
         const name = formDataProps.name;
         dispatch(recipeSliceActions.getRecipesByNameRedux(name))
+        console.log(recipeName)
+        navigate("search-results");
     };
-
 
     return (
         <div>

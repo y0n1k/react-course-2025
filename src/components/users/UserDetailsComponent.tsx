@@ -1,8 +1,10 @@
 import {useLocation, useParams} from "react-router-dom";
 import {IUser} from "../../models/user/IUser.ts";
-import {IRecipe} from "../../models/recipe/IRecipe.ts";
-import {useEffect, useState} from "react";
-import {getRecipesByUserId} from "../../services/api.service.ts";
+import {useEffect} from "react";
+import RecipeComponent from "../recipes/RecipeComponent.tsx";
+import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
+import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
+import {recipeSliceActions} from "../../redux/slices/recipe/recipeSlice.ts";
 
 const UserDetailsComponent = () => {
     const {state} = useLocation();
@@ -11,20 +13,22 @@ const UserDetailsComponent = () => {
     console.log(params);
 
     const {userId} = useParams<{ userId: string }>();
-    const [recipes, setRecipes] = useState<IRecipe[]>([]);
+
+    const {recipeUserId} = useAppSelector(({recipeSlice}) => recipeSlice);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (userId) {
-            getRecipesByUserId(userId).then(setRecipes);
+            const response = dispatch(recipeSliceActions.getRecipesByUserIdRedux(userId))
+            console.log('Response ',response)
+            console.log('Recipes ', recipeUserId)
         }
-    }, [userId]);
-    console.log(recipes)
+    }, [userId, dispatch]);
+
     return (
         <div>
             <div>
-                <div>
-                    {item.firstName} {item.lastName}
-                </div>
+                <h3>{item.firstName} {item.lastName}</h3>
                 <div>
                     Вік: {item.age}
                 </div>
@@ -32,7 +36,10 @@ const UserDetailsComponent = () => {
                     Посада: {item.role}
                 </div>
             </div>
-
+            <h3>Рецепти користувача {item.firstName} {item.lastName}</h3>
+            {
+                recipeUserId?.map(recipe => <RecipeComponent item={recipe} key={recipe.id}/>)
+            }
         </div>
 
     );
