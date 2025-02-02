@@ -6,10 +6,11 @@ type RecipeSliceType = {
     recipeName: {recipes:IRecipe[]} | null,
     recipeId: IRecipe[] | null,
     recipes: IRecipe [],
-    recipeUserId: IRecipe[] | null
+    recipeUserId: IRecipe[] | null,
+    recipesTag: IRecipe[] | null
 }
 
-const initialState: RecipeSliceType = {recipeName: null, recipeId: null, recipes: [], recipeUserId: null}
+const initialState: RecipeSliceType = {recipeName: null, recipeId: null, recipes: [], recipeUserId: null, recipesTag: null}
 
 const getRecipesByNameRedux =
     createAsyncThunk('recipeSlice/getRecipesByNameRedux', async (name: string, thunkAPI) => {

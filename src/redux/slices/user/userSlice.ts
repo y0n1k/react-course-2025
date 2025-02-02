@@ -3,7 +3,7 @@ import {IUser} from "../../../models/user/IUser.ts";
 
 
 type UserSliceType = {
-    userByName: IUser[] | null,
+    userByName: {users:IUser[]} | null,
     userById: {users: IUser[]} | null,
     users: IUser[]
 }
@@ -15,8 +15,8 @@ const getUsersByNameRedux =
         try {
             const userName = await fetch('https://dummyjson.com/users/search?q=' + name)
                 .then(value => value.json())
-            console.log(thunkAPI.fulfillWithValue(userName.userName))
-            return thunkAPI.fulfillWithValue(userName.userName)
+            console.log(thunkAPI.fulfillWithValue(userName))
+            return thunkAPI.fulfillWithValue(userName)
         } catch (e) {
             console.log(e)
             return thunkAPI.rejectWithValue('error')

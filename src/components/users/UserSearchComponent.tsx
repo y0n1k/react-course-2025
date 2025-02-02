@@ -2,17 +2,17 @@ import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {NameValidator} from "../../validators/recipe.name.validator.ts";
 import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx"
-import {recipeSliceActions} from "../../redux/slices/recipe/recipeSlice.ts";
 import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
 import {useNavigate} from "react-router-dom";
+import {userSliceActions} from "../../redux/slices/user/userSlice.ts";
 
 type IFormProps = {
     name: string
 }
 
-const RecipeSearchComponent = () => {
+const UserSearchComponent = () => {
 
-    const {recipeName} = useAppSelector(({recipeSlice}) => recipeSlice);
+    const {userByName} = useAppSelector(({userSlice}) => userSlice);
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
@@ -29,12 +29,12 @@ const RecipeSearchComponent = () => {
     const onSubmit = async (formDataProps: IFormProps) => {
         console.log(formDataProps);
         const name = formDataProps.name;
-        dispatch(recipeSliceActions.getRecipesByNameRedux(name))
-        console.log(recipeName)
+        dispatch(userSliceActions.getUsersByNameRedux(name))
+        console.log(userByName)
         navigate("search-results");
     };
 
-    const showAll = () => navigate("all-recipes")
+    const showAll = () => navigate("all-users")
 
     return (
         <div>
@@ -45,10 +45,10 @@ const RecipeSearchComponent = () => {
                 </label>
                 <button disabled={!isValid}>Надіслати</button>
             </form>
-            <button onClick={showAll}>Показати всі рецепти</button>
+            <button onClick={showAll}>Показати всіх користувачів</button>
             <hr/>
         </div>
     );
 };
 
-export default RecipeSearchComponent;
+export default UserSearchComponent;
